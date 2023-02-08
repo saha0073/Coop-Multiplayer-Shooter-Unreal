@@ -53,7 +53,15 @@ protected:
 
 	ASWeapon* CurrentWeapon;
 
-	void Fire();
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	TSubclassOf<ASWeapon> StarterWeaponClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	FName WeaponAttachSocketName;
+
+	void StartFire();
+
+	void StopFire();
 
 public:	
 	// Called every frame
