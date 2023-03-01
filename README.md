@@ -9,7 +9,7 @@ for health regeneration and speed, spawning Ai enemy, and health indicator.
 ## Techniques Used:
 * GameEngine: Unreal Engine 4.27
 * Tech Stack: C++, Blueprints
-* Multiplayer techniques: RPC calls,  transfer, object replication
+* Multiplayer techniques: RPC calls, authority transfer, object replication
 * Features: weapon, Ai tracker ball, power-ups, health indicator 
 
 ## Demo of playing the Multiplayer game
