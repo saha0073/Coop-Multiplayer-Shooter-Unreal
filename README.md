@@ -6,7 +6,7 @@ replication, authority transfer, RPC calls, were implemented in C++ using UE’s
 It supports features such as weapon, Ai tracker ball that tracks the player and explodes, power-up systems
 for health regeneration and speed, spawning Ai enemy, and health indicator.
 
-## Techniques Used:
+## Techniques Used
 * GameEngine: Unreal Engine 4.27
 * Tech Stack: C++, Blueprints
 * Multiplayer techniques: RPC calls, authority transfer, object replication
