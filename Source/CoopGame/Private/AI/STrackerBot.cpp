@@ -3,8 +3,8 @@
 #include "STrackerBot.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "AI/Navigation/NavigationSystem.h"
-#include "AI/Navigation/NavigationPath.h"
+#include "NavigationSystem.h"
+#include "NavigationPath.h"
 #include "GameFramework/Character.h"
 #include "DrawDebugHelpers.h"
 #include "SHealthComponent.h"
@@ -80,7 +80,7 @@ FVector ASTrackerBot::GetNextPathPoint()
 {
 	//hack to get player location
 	ACharacter* PlayerPawn=UGameplayStatics::GetPlayerCharacter(this, 0);
-	UNavigationPath* NavPath= UNavigationSystem::FindPathToActorSynchronously(this, GetActorLocation(), PlayerPawn);
+	UNavigationPath* NavPath= UNavigationSystemV1::FindPathToActorSynchronously(this, GetActorLocation(), PlayerPawn);
 
 	if (NavPath && NavPath->PathPoints.Num() > 1) {
 		//return next point in the player path
@@ -104,7 +104,7 @@ void ASTrackerBot::SelfDestruct()
 	MeshComp->SetVisibility(false, true);
 	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	if (Role == ROLE_Authority) {
+	if (HasAuthority()) {
 		TArray<AActor*> IgnoredActors;
 		IgnoredActors.Add(this);
 
@@ -128,7 +128,7 @@ void ASTrackerBot::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Role == ROLE_Authority && !bExploded) {
+	if (HasAuthority() && !bExploded) {
 
 
 		float DistanceToarget = (GetActorLocation() - NextPathPoint).Size();
@@ -148,7 +148,7 @@ void ASTrackerBot::Tick(float DeltaTime)
 		}
 		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString::Printf(TEXT("abc")));
 
-		DrawDebugSphere(GetWorld(), NextPathPoint, 20, 12, FColor::Yellow, 4.0f, 1.0f);
+		DrawDebugSphere(GetWorld(), NextPathPoint, 20, 12, FColor::Yellow, false, 0.0f, 1.0f);
 	}
 
 }
@@ -161,7 +161,7 @@ void ASTrackerBot::NotifyActorBeginOverlap(AActor * OtherActor)
 		ASCharacter* PlayerPawn = Cast<ASCharacter>(OtherActor);
 		if (PlayerPawn) {
 
-			if (Role == ROLE_Authority) {
+			if (HasAuthority()) {
 				GetWorldTimerManager().SetTimer(TimerHandle_SelfDamage, this, &ASTrackerBot::DamageSelf, SelfDamageInterval, true, 0.0f);
 			}
 			

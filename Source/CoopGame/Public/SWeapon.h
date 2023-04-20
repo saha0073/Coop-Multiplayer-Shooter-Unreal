@@ -66,7 +66,7 @@ protected:
 	UParticleSystem* TracerEffect;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	TSubclassOf<UCameraShake> FireCamShake;
+	TSubclassOf<UCameraShakeBase> FireCamShake;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	float BaseDamage;
